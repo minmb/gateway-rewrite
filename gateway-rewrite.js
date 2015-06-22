@@ -152,15 +152,15 @@ module.exports = function gateway_rewrite(docroot, options) {
 
                 })
 
+                if (options.stderr) {
+                   child.stderr.pipe(options.stderr)
+                }
+
                 req.pipe(child.stdin)
             }
         }
 
         req.resume()
-
-        if (options.stderr) {
-            child.stderr.pipe(options.stderr)
-        }
 
         if ( matches == 0 ) {
             return next();
