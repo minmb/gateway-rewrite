@@ -77,9 +77,15 @@ module.exports = function gateway_rewrite(docroot, options) {
                     GATEWAY_INTERFACE: 'CGI/1.1',
                     SERVER_PROTOCOL: 'HTTP/1.1',
                     PATH: process.env.PATH,
-                    __proto__: options.env || {},
 
                     REMOTE_ADDR: '127.0.0.1' // Fake
+                }
+
+                var optionsEnv = options.env || {};
+                for (var name in optionsEnv) {
+                  if (optionsEnv.hasOwnProperty(name)) {
+                    env[name] = optionsEnv[name];
+                  }
                 }
 
                 // expose request headers
